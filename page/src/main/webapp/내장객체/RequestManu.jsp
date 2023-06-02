@@ -34,8 +34,7 @@
             <th>ID</th>
             <td>
                 <input type="text" name="userID" id="userID"  value="a" required size='10'>
-                <input type="text" name="userID" id="userID"  value="b" required size='10'>
-                
+                <input type="text" name="userID" id="userID"  value="b" required size='10'>                
             </td>
         </tr>
 
