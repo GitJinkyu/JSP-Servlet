@@ -13,6 +13,11 @@
 	<!-- 404: 페이지를 찾을 수 없음  
 		서버에 파일이 없는 경우, 또는 경로가 일치하지 않는 경우
 		URL경로를 확인해봐야함
+		
+		URL로 호출 => 무조건 get 방식으로 호출한다는것
+		http://			:프로토콜 = 통신규약
+		naver.com		:도메인(ip,port) = 웹서버를 찾아감
+		경로				:파일 경로, 매핑정보
 	-->
 	<a href="RequestWebInfo.jsp?eng=hello&han=안녕">GET 방식 요청</a>
 	
@@ -71,6 +76,9 @@
 	
 	<input type="submit" value="post전송">
 	</form>
+	
+	<h2>3. HTTP 요청 헤더 정보 읽기</h2>
+	<a href="RequestHeader.jsp">요청헤더정보 읽기 </a>
 		 
 		
 </body>

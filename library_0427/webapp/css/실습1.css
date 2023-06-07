@@ -1,0 +1,131 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+.wrap{
+    width: 1000px;
+    height: 700px;
+    margin: 0 auto;
+}
+.wrap header{
+    width: 100%;
+    height: 120px;
+}
+header .logo{
+    width: 100%;
+    height: 90px;
+    margin-top: 10px;
+    
+    
+}
+header .logo .logo_left{
+    float: left;
+    width: 200px;
+    text-align: center;
+}
+header .logo .logo_center{
+    float: left;
+    width: 800px;
+}
+header nav ul{
+    padding: 0px;
+    
+}
+header nav ul li{
+    width: 25%;
+    height: 30px;
+    background-color: rgb(17, 172, 2);
+    float: left;
+    list-style: none;
+}
+header nav ul li a{
+    display: inline-block;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+
+}
+header nav ul li a:hover{
+    color: darkolivegreen;
+}
+main{
+    width: 100%;
+    height: 700px;
+    margin-top: 10px;
+}
+#leftside{
+    width: 200px;
+    height: 100%;
+    float: left;
+
+}
+#maincontent{
+    width: 550px;
+    height: 100%;
+    float: left;
+}
+#maincontent ul{
+    padding: 0px;
+    width: 550px;
+    height: 550px;
+    list-style: none;
+}
+#maincontent ul li{
+    width: 50%;
+    height: 50%;
+    float: left;
+    padding: 0px 5px;
+    text-align: center;
+}
+#maincontent ul li img{
+    width: 100%;
+    height: 70%;
+}
+#rightside{
+    width: 250px; 
+    height: 100%;
+    float: left;
+}
+#login_wrap{
+    width: 250px;
+    height: 70px;
+}
+#login_form_input{
+    float: left;
+    padding-left: 10px;
+}
+#userID{
+    padding: 0;
+    width: 150px;
+    height: 20px;
+}
+#userPW{
+    padding: 0;
+    width: 150px;
+    height: 20px;
+}
+#login_form_btn{
+    float: left;
+    padding-left: 10px;
+}
+#login{
+    width: 80px;
+    height: 48px;
+}
+#login_link{
+    height: 100%;
+    text-align: center;
+}
+#login_link a{
+    text-decoration: none;
+    
+    font-size: 0.8em;
+    color: rgb(87, 86, 86);
+}
+main #leftside img{
+    width: 100%;
+}
+
