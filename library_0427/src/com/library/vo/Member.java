@@ -19,6 +19,14 @@ public class Member {
 		this.grade = grade;
 	}
 	
+	
+	public Member(String id, String pw) {
+		super();
+		this.id = id;
+		this.pw = pw;
+	}
+
+
 	@Override
 	public String toString() {
 		return getId()

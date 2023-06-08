@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@page import="com.library.vo.Member"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,6 +9,16 @@
 <script src='js/library.js'></script>
 </head>
 <body>
+
+<%
+	//세션에 저장된 멤버 객체로 부터 아이디를 출력해온다.
+	if(session.getAttribute("member") != null){
+		Member m = (Member)session.getAttribute("member");
+%>
+	<%=m.getId() %>님 환영합니다.
+	
+	<button onclick="location.href='logout.jsp'">로그아웃</button>
+	
 	<h2>관리자 메뉴</h2>
 	<ul>
 		<li>
@@ -26,5 +37,8 @@
 		<li><button id="btn3">사용자등록</button></li>
 		<li><button id="btn4">사용자삭제</button></li>
 	</ul>
+<%
+}
+%>
 </body>
 </html>

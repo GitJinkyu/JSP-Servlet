@@ -17,9 +17,14 @@
 			MemberService service = new MemberService();
 			Member member = service.login(id,pw);
 			
+			//세션에 아이디 저장		
+			session.setAttribute("member", new Member(id,pw));
+			
 			if(member != null && !member.getId().equals("")){
 				out.print(member.getId()+"님 환영합니다.");
 				if("Y".equals(member.getAdminyn())){
+					//로그인성공		
+			
 					//관리자페이지 호출
 					response.sendRedirect("loginAdmin.jsp");
 				}else{
@@ -30,10 +35,8 @@
 			} else{
 				response.sendRedirect("login.jsp?loginErr=Y");
 			}
-			
-			
-			
-		
+
 		%>
+
 </body>
 </html>
