@@ -1,3 +1,4 @@
+<%@page import="java.awt.Button"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
@@ -42,11 +43,21 @@
 				
                 <!-- 로그인 성공: 환영합니다 -->
                 <%
-                	String name = request.getParameter("name");
-					if (name != null && !name.equals("")) {
-						//로그인 되었다고 판단
-					    out.print(name+"님 환영합니다.<br>"); 
-			        }else{
+                String id = "";
+                
+               	//형변환하기전에 null체크를 해야좋음 혹시 모를 예외발생을 막기위해
+                if(session.getAttribute("id") != null){
+                id = (String)session.getAttribute("id");	
+                }
+                
+				if (id != null && !id.equals("")) {
+				    out.print(id+"님 환영합니다.<br>"); 
+				%>
+				<!-- 로그아웃 -->
+				<button onclick="location.href='logout.jsp'">로그아웃</button>
+				<%	
+						
+			    }else{
 				%>   
 	                <div id='login_wrap'>
 	                    <form id='login_form' action="./greenlogin.jsp" method="post">
@@ -66,9 +77,9 @@
 	                    </div>
 	                    <!-- 로그인영역끝 --> 
 	                </div>
-                	<%
-                	}
-					%>
+               	<%
+               	}
+				%>
                     <img src='images/right_img.jpg' width='250px' height='300px'>
                     <img src='images/me_chat.jpg'width='250px'>
             </aside>

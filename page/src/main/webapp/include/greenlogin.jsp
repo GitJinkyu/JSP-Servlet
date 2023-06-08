@@ -20,8 +20,12 @@
 		//로그인 성공
 		out.print("로그인 성공");
 		
+		//세션에 아이디 저장
+		 session.setAttribute("id", id);
+		
+		
 		//요청할 페이지 경로
-		response.sendRedirect("gogreen.jsp?name="+id);
+		response.sendRedirect("gogreen.jsp");
 		
 	}else{
 		//로그인실패
