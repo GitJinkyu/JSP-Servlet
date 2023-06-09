@@ -1,3 +1,4 @@
+<%@page import="util.CookieManager"%>
 <%@page import="java.awt.Button"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -43,8 +44,10 @@
 				
                 <!-- 로그인 성공: 환영합니다 -->
                 <%
-                String id = "";
+                //아이디 저장 체크했을때 쿠키로 아이디박스에 쿠키값 출력하기
+                String cookieValue = CookieManager.returnCookie("userID", request);
                 
+                String id = "";
                	//형변환하기전에 null체크를 해야좋음 혹시 모를 예외발생을 막기위해
                 if(session.getAttribute("id") != null){
                 id = (String)session.getAttribute("id");	
@@ -62,19 +65,26 @@
 	                <div id='login_wrap'>
 	                    <form id='login_form' action="./greenlogin.jsp" method="post">
 	                        <div id='login_form_input'>
-	                            <input type="text" name="userID" id="userID" placeholder='ID를 입력하세요'required>
+	                            <input type="text" name="userID" id="userID" placeholder='ID를 입력하세요'required value="<%=cookieValue%>">
 	                            <br>
 	                            <input type="password" name="userPW" id="userPW" placeholder='PW를 입력하세요' required>
 	                        </div>
 	                        <div id='login_form_btn'>
 	                            <input type="submit" value="로그인" id='login'>
 	                        </div>
+	                        	<!-- 
+	                        		아이디 저장하기 체크해놓기
+	                        	< %=!cookieValue.equals("")? "checked" : ""%>
+	                        	 -->
+	                            <input type="checkbox" name="save_check" value="Y" <%=!cookieValue.equals("")? "checked" : ""%>>아이디 저장하기
 	                    </form>
+	                    <!-- 
 	                    <div id='login_link'>
 	                        <a href='#'>회원가입</a>
 	                        <a href='#'>아이디찾기</a>
 	                        <a href='#'>비밀번호찾기</a>
 	                    </div>
+	                     -->
 	                    <!-- 로그인영역끝 --> 
 	                </div>
                	<%
