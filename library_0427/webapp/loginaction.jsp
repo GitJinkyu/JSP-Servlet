@@ -1,3 +1,4 @@
+<%@page import="com.util.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@page import="com.library.service.MemberService"  %>
@@ -12,7 +13,17 @@
 		<%
 			String id = request.getParameter("userID");
 			String pw = request.getParameter("userPW");
-
+			
+			//아이디 저장 체크박스
+			String saveYN = request.getParameter("save_check");
+			
+			
+			//아이디 저장하기 체크가 되어있다면
+			//쿠키에 아이디를 저장한다
+			if(saveYN != null && "Y".equals(saveYN)){
+				//쿠키생성하는 메서드 호출
+				CookieManager.makeCookie("userID", id, 3600, response);
+			}
 			
 			MemberService service = new MemberService();
 			Member member = service.login(id,pw);
@@ -35,7 +46,6 @@
 			} else{
 				response.sendRedirect("login.jsp?loginErr=Y");
 			}
-
 		%>
 
 </body>
