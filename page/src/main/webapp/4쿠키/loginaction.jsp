@@ -1,4 +1,6 @@
 
+<%@page import="dto.Member"%>
+<%@page import="dao.MemberDao"%>
 <%@page import="util.CookieManager"%>
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -13,6 +15,9 @@
 <%
 	String id = request.getParameter("userID");
 	String pw = request.getParameter("userPW");
+	
+	MemberDao dao = new MemberDao();
+	Member member = dao.login(id, pw);
 	
 	//아이디 저장 체크박스
 	String saveYN = request.getParameter("save_check");
@@ -40,9 +45,8 @@
 	
 	
 	
-	//아이디가 abc, 비밀번호가 123이면 로그인 성공
-	//id != null && id.equals("abc")
-	if("abc".equals(id)&&"123".equals(pw)){
+	//DB 조회결과 id/pw가 일치하는 회원이 있으면 로그인 성공
+	if(member != null && !"".equals(member.getName())){
 		//로그인 성공
 		out.print("로그인 성공");
 		
