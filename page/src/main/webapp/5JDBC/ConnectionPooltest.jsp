@@ -12,7 +12,7 @@
 </head>
 <body>
 <%
-
+	
 	Connection con = DBConnectionPool.getConnection();
 	PreparedStatement psmt =  con.prepareStatement("select sysdate from dual");
 	

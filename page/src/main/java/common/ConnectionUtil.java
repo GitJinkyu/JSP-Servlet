@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.ServletContext;
 
@@ -58,11 +59,10 @@ public class ConnectionUtil {
 		String ID = application.getInitParameter("OracleID");
 		String PW = application.getInitParameter("OraclePW");
 		
-		System.out.println(driver);
-		System.out.println(url);
-		System.out.println(ID);
-		System.out.println(PW);
-		
+//		System.out.println(driver);
+//		System.out.println(url);
+//		System.out.println(ID);
+//		System.out.println(PW);
 		
 		//커넥션 생성
 				try {
@@ -72,18 +72,48 @@ public class ConnectionUtil {
 //					2.커넥션 생성
 					conn = DriverManager.getConnection(url,ID,PW);
 					
-					
-					
 				} catch (Exception e) {
 					System.err.println("라이브러리 로드중 오류가 발생하였습니다.");
 					e.printStackTrace();
 				}
 		
-		
-		
-		
-		
 		return conn;
+	}
+	
+	public static void close(Connection conn) {
+		
+		try {
+			if(conn != null && !conn.isClosed())conn.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void close(Connection conn, Statement stmt) {
+		
+		try {
+			if(stmt != null && !stmt.isClosed())stmt.close();
+			if(conn != null && !conn.isClosed())conn.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void close(Connection conn, Statement stmt, ResultSet rs) {
+		
+		try {
+			if(rs != null && !rs.isClosed())rs.close();
+			if(stmt != null && !stmt.isClosed())stmt.close();
+			if(conn != null && !conn.isClosed())conn.close();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
