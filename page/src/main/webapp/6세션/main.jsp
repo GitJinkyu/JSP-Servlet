@@ -13,23 +13,34 @@
 
 </head>
 <body>
-<%
-Member member =  new Member();
-%>
 	<h2>게시판</h2>
 	
-	<%=member.getId() %>님 환영합니다.
+	<h1><%=session.getAttribute("userId")%>님 환영합니다.</h1>
 	<button onclick="location.href='logout.jsp'">로그아웃</button>
 	
 	<table border='1'>
 	<%
-	Connection con = ConnectionUtil.getConnection();
+	String sql="select num, title, content, id, postdate, visitcount from board order by num desc";
 	
-	String sql="select num, title, content, id, postdate, visitcount from board";
+	Connection con = ConnectionUtil.getConnection();
 	
 	PreparedStatement pstm = con.prepareStatement(sql);
 	
 	ResultSet rs = pstm.executeQuery();
+	
+	
+	
+	out.print(
+			String.format("<thead>\n" +
+					" <tr>\n" +
+					" <th>글번호</th>\n" +
+					" <th>제목</th>\n" +
+					" <th>내용</th>\n" +
+					" <th>작성자</th>\n" +
+					" <th>작성시간</th>\n" +
+					" <th>조회수</th>\n" +
+					" </tr>\n" +
+					" </thead>\n"));
 	
 	while(rs.next()){
 		String num = rs.getString("num");
@@ -40,16 +51,7 @@ Member member =  new Member();
 		String visitcount = rs.getString("visitcount");
 		
 		out.print(
-		String.format("<thead>\n" +
-				" <tr>\n" +
-				" <th>글번호</th>\n" +
-				" <th>제목</th>\n" +
-				" <th>내용</th>\n" +
-				" <th>작성자</th>\n" +
-				" <th>작성시간</th>\n" +
-				" <th>조회수</th>\n" +
-				" </tr>\n" +
-				" </thead>\n" +
+		String.format(
 				" <tbody>\n" +
 				" <tr>\n" +
 				" <td>%s</td>\n" +

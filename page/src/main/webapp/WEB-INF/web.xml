@@ -64,4 +64,8 @@
 	 <res-auth>Container</res-auth>
 	</resource-ref>
   	
+  	<!-- 세션 유지시간을 분단위로 설정 -->
+  	<session-config>
+		<session-timeout>20</session-timeout>  	
+  	</session-config>
 </web-app>
