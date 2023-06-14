@@ -12,7 +12,7 @@
  
             <!-- 8장과 9장의 회원제 게시판 프로젝트에서 사용할 링크 -->
             &nbsp;&nbsp;&nbsp; 
-            <a href="NoPagingBoard.jsp">게시판(페이징X)</a>
+            <a href="List.jsp">게시판(페이징X)</a>
 
 
             &nbsp;&nbsp;&nbsp; 
