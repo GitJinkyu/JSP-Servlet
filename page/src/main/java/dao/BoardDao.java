@@ -62,8 +62,13 @@ public class BoardDao {
 	public List<Board> getList(String searchField,String  searchWord){
 		List<Board> boardlist = new ArrayList<Board>();
 		
-		String sql="select * from board ";
+//		String sql="select * from board ";
 		
+		String sql="select num,title,content,id"
+				+ ",decode(trunc(sysdate),trunc(postdate),to_char(postdate,'hh24:mi:ss')"
+				+ ",to_char(postdate,'yyyy-mm-dd')) as postdate"
+				+ ",visitcount "
+				+ "from board ";	
 		//검색어가 입력되었으면 검색 조건 추가
 		if(searchField != null && searchWord != null) {
 			sql += "WHERE "+searchField+" LIKE '%"+searchWord+"%' ";	
@@ -216,7 +221,24 @@ public class BoardDao {
 		int res = 0;
 		
 		String sql = String.format
-		("UPDATE board SET title = %s, content = %s  WHERE num = %s",title,content, num);
+		("UPDATE board SET title = '%s', content = '%s'  WHERE num =%s",title,content, num);
+		 
+		try (Connection con = common.DBConnectionPool.getConnection();
+				Statement stmt = con.createStatement();){
+			res = stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	
+	public int edit(Board board) {
+		int res = 0;
+		
+		String sql = String.format
+		("UPDATE board SET title = '%s', content = '%s'  WHERE num =%s",board.getTitle(),board.getContent(),board.getNum());
 		 
 		try (Connection con = common.DBConnectionPool.getConnection();
 				Statement stmt = con.createStatement();){

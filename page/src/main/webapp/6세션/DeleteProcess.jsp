@@ -16,7 +16,7 @@
 <%
 	int res=0;
 	BoardDao BDao = new BoardDao();
-	Board board = new Board();
+
 	
 	//사용자가 로그아웃을 하지 않았더라도
 	//일정시간이 경과되면 세션이 제거되므로 오류가 발생할수있다

@@ -55,7 +55,7 @@
 	</tr>
 </table>
 
-<form name="editFrm" method="post" action="EditProcess.jsp"
+<form name="editFrm" method="post" action="EditProcess.jsp?num=<%=board.getNum()%>"
       onsubmit="return validateForm(this);">
     <table border="1" width="90%">
         <tr>
@@ -67,16 +67,15 @@
         <tr>
             <td>내용</td>
             <td>
-                <textarea name="content" style="width: 90%; height: 100px;"><%= board.getContent() %></textarea>
+                <textarea name="content" rows=10 style="width: 90%;  "><%= board.getContent() %></textarea>
                
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <button type="submit">작성 완료</button>
+                <button type="submit">수정하기</button>
                 <button type="reset">다시 입력</button>
-                <button type="button" onclick="location.href='List.jsp';">
-                    목록 보기</button>
+                <button type="button" onclick="location.href='List.jsp';">목록 보기</button>
             </td>
         </tr>
     </table>

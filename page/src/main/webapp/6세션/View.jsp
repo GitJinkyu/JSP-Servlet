@@ -66,7 +66,7 @@
 </table>
 
 <form >
-    <table border="1" width="90%">
+    <table border="1" width="90%" >
         <tr>
             <td>번호</td>
             <td><%= board.getNum() %></td>
@@ -86,9 +86,9 @@
             <td colspan="3"><%= board.getTitle() %></td>
         </tr>
         
-        <tr>
+        <tr height=200px>
             <td>내용</td>
-            <td colspan="3"><%= board.getContent() %></td>
+            <td colspan="3" ><%= board.getContent() %></td>
         </tr>
      
         <tr>
