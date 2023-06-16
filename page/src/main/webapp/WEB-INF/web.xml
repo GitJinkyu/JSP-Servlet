@@ -68,4 +68,20 @@
   	<session-config>
 		<session-timeout>20</session-timeout>  	
   	</session-config>
+  	
+  	<!-- 한글 인코딩 필터  -->
+  	<filter>
+    	<filter-name>SetCharacterEncodingFilter</filter-name>
+    	<filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+    	<init-param>
+    		<param-name>encoding</param-name>
+    		<param-value>utf-8</param-value>
+    	</init-param>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>SetCharacterEncodingFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 </web-app>

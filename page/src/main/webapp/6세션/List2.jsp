@@ -34,15 +34,12 @@
     String pageNo = request.getParameter("pageNo");
     
     Criteria criteria = new Criteria(searchField,searchWord,pageNo);
-    int totalCnt = Bdao.getTotalCnt(criteria);
     
     
-    
-    //List<Board> boardList = Bdao.getList(criteria);
     List<Board> boardList = Bdao.getListPage(criteria);
     
-    PageDto pageDto = new PageDto(totalCnt,criteria);
-	
+    
+    int totalCnt = Bdao.getTotalCnt(criteria);
     //검색어가 Null이 아니면 검색 기능을 추가
 
     
@@ -67,26 +64,24 @@
 	</tr>
 </table>
 <!-- 검색폼 -->
-<form name='searchForm'>
-<input type='text' name='pageNo' value='<%=criteria.getPageNo() %>'>
-	<table border="1" width="90%" >
-	  <tr align="center">
-	    <td >
-	        <label for="selectbox"></label>
-	        <select name="searchField" id="selectbox">
-	          <option value="title" selected >제목</option>
-	          <option value="content">내용</option>
-	          <option value="id">작성자</option>
-	        </select>
-	
-	        <label for="serachWord"></label>
-	        <input type="search" name="searchWord" id="searchWord" value="<%=output%>">
-	        <input type="submit" value="검색">
-	    </td>
-		
-	  </tr>
-	</table>
-</form>
+<table border="1" width="90%" >
+  <tr align="center">
+    <td >
+      <form>
+        <label for="selectbox"></label>
+        <select name="searchField" id="selectbox">
+          <option value="title" selected >제목</option>
+          <option value="content">내용</option>
+          <option value="id">작성자</option>
+        </select>
+
+        <label for="serachWord"></label>
+        <input type="search" name="searchWord" id="searchWord" value="<%=output%>">
+        <input type="submit" value="검색">
+      </form>
+    </td>
+  </tr>
+</table>
 <!-- 검색폼 끝 -->
 
 <table border='1' width="90%">
@@ -127,7 +122,6 @@ if(boardList.isEmpty()){
 
 <% //로그인 했을때만 글쓰기 버튼 보여주기
 if(session.getAttribute("userId") != null){ 
-
 %>
 <table width="90%" border='1'>
 	<tr width="90%">
@@ -137,16 +131,6 @@ if(session.getAttribute("userId") != null){
 	</tr>
 </table>
 <%}%>
-
-<!-- 페이지블럭 생성 시작 -->
-<table border="1" width="90%">
-	<tr >
-		<td align="center">
-		<%@include file = "PageNavi.jsp" %>
-		</td>
-	</tr>
-</table>
-<!-- 페이지블럭 생성 끝 -->
 
 </div>
 </body>

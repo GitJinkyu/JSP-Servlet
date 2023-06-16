@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
+import common.DBConnectionPool;
 import dto.Board;
+import dto.Criteria;
 
 public class BoardDao {
 
@@ -22,14 +22,14 @@ public class BoardDao {
 	 * 게시물의 갯수를 반환
 	 * @return
 	 */
-	public int getTotalCnt(String searchField,String  searchWord) {
+	public int getTotalCnt(Criteria criteria) {
 		int totalCnt = 0 ;
 		
 		String sql="select count(*) from board ";
 		
 		//검색어가 입력되었으면 검색 조건 추가
-		if(searchField != null && searchWord != null) {
-			sql += "WHERE "+searchField+" LIKE '%"+searchWord+"%' ";	
+		if(criteria.getSearchField() != null && criteria.getSearchWord() != null) {
+			sql += "WHERE "+criteria.getSearchField()+" LIKE '%"+criteria.getSearchWord()+"%' ";	
 		}
 		sql	+= "order by num desc";
 		
@@ -59,30 +59,27 @@ public class BoardDao {
 	 * @param searchWord  : 검색어
 	 * @return List<Board>: 게시글 목록
 	 */
-	public List<Board> getList(String searchField,String  searchWord){
+	public List<Board> getList(Criteria criteria){
 		List<Board> boardlist = new ArrayList<Board>();
 		
-//		String sql="select * from board ";
-		
-		String sql="select num,title,content,id"
-				+ ",decode(trunc(sysdate),trunc(postdate),to_char(postdate,'hh24:mi:ss')"
-				+ ",to_char(postdate,'yyyy-mm-dd')) as postdate"
-				+ ",visitcount "
-				+ "from board ";	
-		//검색어가 입력되었으면 검색 조건 추가
-		if(searchField != null && searchWord != null) {
-			sql += "WHERE "+searchField+" LIKE '%"+searchWord+"%' ";	
+		//글 작성 시간이 오늘날자이면 상세한 오늘 시간으로 표시 아니면 그냥 날자로 표시
+		String sql = "SELECT num, title, content, id, "
+		           + "DECODE(TRUNC(sysdate), TRUNC(postdate), TO_CHAR(postdate, 'HH24:MI:SS'), TO_CHAR(postdate, 'YYYY-MM-DD')) AS postdate, "
+		           + "visitcount "
+		           + "FROM board ";
+		        
+		// 검색어가 입력된 경우 검색조건을 추가
+		if (criteria.getSearchField() != null && !"".equals(criteria.getSearchWord())) {
+		    sql += "WHERE " + criteria.getSearchField() +
+		           " LIKE '%" + criteria.getSearchWord() + "%' ";
 		}
-		sql	+= "order by num desc";
-		
-		
-		// try ( 리소스생성 ) => try문이 종료되면서 리소스를 자동으로 반납
-		try (Connection con = common.DBConnectionPool.getConnection();
-				PreparedStatement pstm = con.prepareStatement(sql);
-				ResultSet rs = pstm.executeQuery();){
+		sql += "ORDER BY num DESC";
+
+		try(Connection conn = DBConnectionPool.getConnection();
+			PreparedStatement psmt = conn.prepareStatement(sql);) {
+			ResultSet rs = psmt.executeQuery();
 			
 			while(rs.next()) {
-				//게시물의 한 행을 DTO에 저장
 				Board board = new Board();
 				
 				board.setNum(rs.getString("num"));
@@ -94,13 +91,66 @@ public class BoardDao {
 				
 				boardlist.add(board);
 			}
-
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return boardlist;
 	}
+	
+	//페이징 처리
+		public List<Board> getListPage(Criteria criteria){
+			List<Board> boardlist = new ArrayList<Board>();
+			
+			//글 작성 시간이 오늘날자이면 상세한 오늘 시간으로 표시 아니면 그냥 날자로 표시
+			String sql = "select * from("
+						+ "    select rownum rn,t.* from("
+						+ "SELECT num, title, content, id, "
+						+ "DECODE(TRUNC(sysdate), TRUNC(postdate), TO_CHAR(postdate, 'HH24:MI:SS'), TO_CHAR(postdate, 'YYYY-MM-DD')) AS postdate, "
+						+ "visitcount "
+						+ "FROM board ";
+			        
+			// 검색어가 입력된 경우 검색조건을 추가
+			if (criteria.getSearchField() != null && !"".equals(criteria.getSearchWord())) {
+			    sql += "WHERE " + criteria.getSearchField() +
+			           " LIKE '%" + criteria.getSearchWord() + "%' ";
+			}
+			sql += "ORDER BY num DESC"
+					+ "    )t"
+					+ ")"
+					+ "where rn between "
+					+ criteria.getStartNo()
+					+ "and "
+					+ criteria.getEndNo();
+
+			try(Connection conn = DBConnectionPool.getConnection();
+				PreparedStatement psmt = conn.prepareStatement(sql);) {
+				ResultSet rs = psmt.executeQuery();
+				
+				while(rs.next()) {
+					Board board = new Board();
+					
+					board.setNum(rs.getString("num"));
+					board.setTitle(rs.getString("title"));
+					board.setContent(rs.getString("content"));
+					board.setId(rs.getString("id"));
+					board.setPostdate(rs.getString("postdate"));
+					board.setVisitcount(rs.getString("visitcount"));
+					
+					boardlist.add(board);
+				}
+				
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return boardlist;
+		}
+	
+	
 	
 	/**
 	 * 게시글 작성

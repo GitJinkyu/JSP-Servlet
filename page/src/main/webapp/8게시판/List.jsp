@@ -1,3 +1,4 @@
+<%@page import="dto.PageDto"%>
 <%@page import="dto.Criteria"%>
 <%@page import="java.util.List"%>
 <%@page import="dto.Board"%>
@@ -11,16 +12,21 @@
 <title>회원제 게시판</title>
 </head>
 <%
+	out.print(request.getParameter("pageNo"));
 	//검색조건
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
-	int pageNo = request.getParameter("pageNo") == null ? 1 : Integer.parseInt(request.getParameter("pageNo"));
+	String pageNo = request.getParameter("pageNo");
 	
 	Criteria criteria = new Criteria(searchField,searchWord,pageNo);
 	
 	NewBoardDao dao = new NewBoardDao();
+	int TotalCnt = dao.getTotalCnt(criteria);
+	
 	//List<Board> boardlist = dao.getList(criteria);
 	List<Board> boardlist = dao.getListPage(criteria);
+	
+	PageDto pageDto = new PageDto(TotalCnt,criteria);
 	
     String output = searchWord != null ? searchWord : "";
 %>
@@ -31,11 +37,13 @@
 
 	<h1>new</h1>
     <h2>목록 보기(List)</h2>
+    <p >총건수 : <%=TotalCnt %></p>
     <!-- 검색폼 --> 
-    <form method="get">  
+    <form method="get" name="searchForm">  
     <table border="1" width="90%">
     <tr>
         <td align="center">
+    	<input type='hidden' name='pageNo' value='<%=criteria.getPageNo() %>'>
             <select name="searchField"> 
                 <option value="title">제목</option> 
                 <option value="content">내용</option>
@@ -70,7 +78,7 @@
 		        <tr align="center">
 		            <td><%=board.getNum() %></td>  <!--게시물 번호-->
 		            <td align="left">  <!--제목(+ 하이퍼링크)-->
-		                <a href="View.jsp?num=<%=board.getNum()%>"><%=board.getTitle() %></a> 
+		                <a href="View.jsp?num=<%=board.getNum()%>&pageNo=<%=criteria.getPageNo()%>"><%=board.getTitle() %></a> 
 		            </td>
 		            <td align="center"><%=board.getId() %></td>          <!--작성자 아이디-->
 		            <td align="center"><%=board.getVisitcount() %></td>  <!--조회수-->
@@ -95,6 +103,16 @@
     <%	
     }
     %>
+    
+<!-- 페이지블럭 생성 시작 -->
+<table border="1" width="90%">
+	<tr >
+		<td align="center">
+		<%@include file = "../6세션/PageNavi.jsp" %>
+		</td>
+	</tr>
+</table>
+<!-- 페이지블럭 생성 끝 -->
 
 </body>
 </html>

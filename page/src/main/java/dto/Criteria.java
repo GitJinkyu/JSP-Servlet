@@ -11,15 +11,22 @@ public class Criteria {
 	int startNo;
 	int endNo;
 	
-	public Criteria(String searchField, String searchWord, int pageNo) {
-	
-		this.searchField = searchField;
-		this.searchWord = searchWord;
+	public Criteria(String searchField, String searchWord, String pageNoStr) {
+		if(searchWord != null) {
+			this.searchField = searchField;
+			this.searchWord = searchWord;
+			
+		}
 		
-		if(pageNo > 0) {
-			this.pageNo = pageNo;
-			endNo = pageNo * amount;
-			startNo = pageNo * amount - (amount - 1);
+		if(pageNoStr != null) {
+			pageNo = Integer.parseInt(pageNoStr);
+			if(pageNo > 0) {
+				endNo = pageNo * amount;
+				startNo = pageNo * amount - (amount - 1);
+			}else {
+				pageNo = 1;
+			}
+			
 		}
 	}
 	

@@ -23,6 +23,8 @@
 	}
 	int visitCounting = dao.visitCounting(num);
 	Board board = dao.selectOne(num);
+	
+	String pageNo = request.getParameter("pageNo") == null ? "1" : request.getParameter("pageNo");
 %>
 
 <%@ include file ="../6세션/Link.jsp" %>
@@ -55,9 +57,9 @@
         <tr>
             <td colspan="4" align="center">
             
-                <button type="button">수정하기</button>
+                <button type="button" onclick="location.href='Edit.jsp?num=<%=num%>'">수정하기</button>
                 <button type="button">삭제하기</button> 
-                <button type="button" onclick="location.href='List.jsp'">목록 보기</button>
+                <button type="button" onclick="location.href='List.jsp?pageNo=<%=pageNo%>'">목록 보기</button>
             </td>
         </tr>
     </table>

@@ -111,6 +111,40 @@ public class NewBoardDao {
 	}
 	
 	
+	/**
+	 * 게시물의 갯수를 반환
+	 * @return
+	 */
+	public int getTotalCnt(Criteria criteria) {
+		int totalCnt = 0 ;
+		
+		String sql="select count(*) from board ";
+		
+		//검색어가 입력되었으면 검색 조건 추가
+		if(criteria.getSearchField() != null && criteria.getSearchWord() != null) {
+			sql += "WHERE "+criteria.getSearchField()+" LIKE '%"+criteria.getSearchWord()+"%' ";	
+		}
+		sql	+= "order by num desc";
+		
+		// try ( 리소스생성 ) => try문이 종료되면서 리소스를 자동으로 반납
+		try (Connection con = common.DBConnectionPool.getConnection();
+				PreparedStatement pstm = con.prepareStatement(sql);
+				ResultSet rs = pstm.executeQuery();){
+			
+			rs.next();
+			//게시물의 한 행을 DTO에 저장
+			totalCnt = rs.getInt(1);
+			
+			rs.close();
+		} catch (SQLException e){
+			System.out.println("총 게시물의 수를 조회하던 중 예외가 발생하였습니다.");
+			e.printStackTrace();
+		}
+		
+		return totalCnt;
+	}
+	
+	
 	public int writePost(String title,String content,String id) {
 		int res = 0;
 		String sql = "insert into board values (seq_board_num.nextval,'"+title+"','"+content+"','"+id+"', sysdate, 0)";
@@ -187,6 +221,22 @@ public class NewBoardDao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		
+		return res;
+	}
+	
+	public int edit(Board board) {
+		int res = 0;
+		
+		String sql = String.format
+		("UPDATE board SET title = '%s', content = '%s'  WHERE num =%s",board.getTitle(),board.getContent(),board.getNum());
+		 
+		try (Connection con = common.DBConnectionPool.getConnection();
+				Statement stmt = con.createStatement();){
+			res = stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		return res;
 	}
