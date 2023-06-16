@@ -136,3 +136,17 @@ insert into board values (seq_board_num.nextval, '제목1입니다', '내용1입
 insert into board values (seq_board_num.nextval,'title','content','id', sysdate, 0);
 
 drop table member;
+
+select * 
+from(   
+    select rownum rn , board.*
+    from board
+    order by num desc
+
+)
+where rn between 1 and 10; 
+
+--더미데이터 대량 추가하기 한번에 여러개 추가됨
+insert into board
+select SEQ_BOARD_NUM.nextval,'제목','내용','test',sysdate, 0
+from board;
