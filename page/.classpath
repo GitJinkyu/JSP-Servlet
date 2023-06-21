@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/ojdbc8.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/orai18n.jar"/>
 	<classpathentry kind="lib" path="C:/Users/user/git/JSP-Servlet/page/src/main/webapp/WEB-INF/lib/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/user/git/JSP-Servlet/page/src/main/webapp/WEB-INF/lib/cos.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
