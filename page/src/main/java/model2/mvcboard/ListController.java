@@ -26,10 +26,10 @@ public class ListController extends HttpServlet{
 		List<MVCBoardDTO> boardlist = dao.getList(criteria);
 		//request영역에 저장
 		req.setAttribute("boardlist", boardlist);
+		
 		//화면 페이지 전환
-		req.getRequestDispatcher("/14MVCBoard/List.jsp").forward(req, resp);
+		req.getRequestDispatcher("List.jsp").forward(req, resp);
 	}
-	
 	
 	public ListController() {
 		// TODO Auto-generated constructor stub

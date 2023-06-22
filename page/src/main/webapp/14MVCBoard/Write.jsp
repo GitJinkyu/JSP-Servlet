@@ -8,8 +8,10 @@
 <title>회원제 게시판</title>
 </head>
 <body>
-<form name="writeForm" method="post" action="WriteProcess.jsp" enctype=“multipart/formdata>
+<form name="writeForm" method="post" action="Write.do" enctype=“multipart/formdata>
+
 <h2>회원제 게시판 - 글쓰기(Write)</h2>
+
     <table border="1" width="90%">
      	<tr>
             <td>작성자</td>

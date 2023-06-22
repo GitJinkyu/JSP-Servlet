@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	
 	<h2>MVC 모델 2 게시판</h2>
     <!-- 게시물 목록 테이블(표) --> 
     <table border="1" width="90%">
@@ -61,10 +61,12 @@
 	 </table>
 	 
 	<!--목록 하단의 [글쓰기] 버튼-->
+	<form action="Write.do" method="get">
     <table border="1" width="90%">
         <tr align="right">
-            <td><button type="button" onclick="location.href='Write.jsp'">글쓰기</button></td>
+            <td><button type="submit">글쓰기</button></td>
         </tr>
     </table>
+    </form>
 </body>
 </html>

@@ -117,7 +117,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>ListController</servlet-name>
-		<url-pattern>/MVCBoard/list.do</url-pattern>
+		<url-pattern>/14MVCBoard/List.do</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
@@ -127,7 +127,7 @@
 	
 	<servlet-mapping>
 		<servlet-name>WriteController</servlet-name>
-		<url-pattern>/MVCBoard/write.do</url-pattern>
+		<url-pattern>/14MVCBoard/Write.do</url-pattern>
 	</servlet-mapping>
 	
 </web-app>

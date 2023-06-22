@@ -11,7 +11,7 @@ CREATE TABLE mvcboard(
     visitcount NUMBER default 0 not null
 );
 
---½ÃÄö½º »ı¼º
+--ì‹œí€€ìŠ¤ ìƒì„±
 CREATE SEQUENCE seq_board_num
     INCREMENT BY 1
     START WITH 1
@@ -20,16 +20,7 @@ CREATE SEQUENCE seq_board_num
     NOCYCLE
     NOCACHE;
     
-insert into mvcboard (idx, name, title, content, pass)
-    values (seq_board_num.nextval, '±èÀ¯½Å', 'ÀÚ·á½Ç Á¦¸ñ1 ÀÔ´Ï´Ù.','³»¿ë','1234');
-insert into mvcboard (idx, name, title, content, pass)
-    values (seq_board_num.nextval, 'Àåº¸°í', 'ÀÚ·á½Ç Á¦¸ñ2 ÀÔ´Ï´Ù.','³»¿ë','1234');
-insert into mvcboard (idx, name, title, content, pass)
-    values (seq_board_num.nextval, 'ÀÌ¼ø½Å', 'ÀÚ·á½Ç Á¦¸ñ3 ÀÔ´Ï´Ù.','³»¿ë','1234');
-insert into mvcboard (idx, name, title, content, pass)
-    values (seq_board_num.nextval, '°­°¨Âù', 'ÀÚ·á½Ç Á¦¸ñ4 ÀÔ´Ï´Ù.','³»¿ë','1234');
-insert into mvcboard (idx, name, title, content, pass)
-    values (seq_board_num.nextval, '´ëÁ¶¿µ', 'ÀÚ·á½Ç Á¦¸ñ5 ÀÔ´Ï´Ù.','³»¿ë','1234');
+
 
 SELECT idx, name, title, content,DECODE(TRUNC(sysdate), TRUNC(postdate), TO_CHAR(postdate, 'HH24:MI:SS'), TO_CHAR(postdate, 'YYYY-MM-DD')) AS postdate
                     ,ofile
@@ -43,4 +34,4 @@ SELECT idx, name, title, content,DECODE(TRUNC(sysdate), TRUNC(postdate), TO_CHAR
 delete from MVCBoard where idx= 6;
 
 insert into mvcboard (idx, name, title, content, pass)
-    values (seq_board_num.nextval, '´ëÁ¶¿µ', 'ÀÚ·á½Ç Á¦¸ñ5 ÀÔ´Ï´Ù.','³»¿ë','1234');
+    values (seq_board_num.nextval, 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½Ú·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½5 ï¿½Ô´Ï´ï¿½.','ï¿½ï¿½ï¿½ï¿½','1234');
