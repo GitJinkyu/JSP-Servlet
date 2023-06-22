@@ -12,12 +12,12 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
+<%-- <%
 fileDto dto = new fileDto();
 fileDao dao = new fileDao();
 List<fileDto> filelist = dao.getFileList(dto);
 
-%>
+%> --%>
 
 
 
@@ -39,7 +39,7 @@ List<fileDto> filelist = dao.getFileList(dto);
         
         <!-- 목록의 내용 --> 
         <!-- JSTL 사용 -->
-        <c:set var="list" value="<%=filelist %>"/>
+        <c:set var="list" value="${requestScope.filelist }"/>
         
         <c:if test="${empty list }" var="result">
 	 	<!-- 조건이 참인 경우 실행되는 부분 -->
