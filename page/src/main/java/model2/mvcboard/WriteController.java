@@ -36,18 +36,23 @@ public class WriteController extends HttpServlet {
 			
 			MVCBoardDAO dao = new MVCBoardDAO();
 			MVCBoardDTO dto = new MVCBoardDTO("",name,title,content,"","","","",pass,"");
+			dto.setName(name);
+			dto.setTitle(title);
+			dto.setContent(content);
+			dto.setPass(pass);
 
 			//글 작성
 			res = dao.insert(dto);
 			
 			if (res > 0) {
 		        // 글 작성 성공한 경우 처리
-				req.getRequestDispatcher("/14MVCBoard/List.do").forward(req, resp); // 글 목록 페이지로 이동
+				JSFunction.alertLocation(resp, "글 작성 성공", "../mvcboard/write.do");
+			
 		    } else {
 		        // 글 작성 실패한 경우 처리
 		        // 적절한 오류 처리를 수행하거나 다시 작성 페이지로 이동하는 등의 로직을 구현
 		    	System.out.println("오류발생");
-		    	req.getRequestDispatcher("/14MVCBoard/List.do").forward(req, resp); // 글 목록 페이지로 이동
+		    	JSFunction.alertBack(resp, "글 작성중 오류 발생했습니다.");
 		    }
 	
 		

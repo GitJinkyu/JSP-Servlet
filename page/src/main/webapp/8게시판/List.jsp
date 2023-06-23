@@ -28,6 +28,7 @@
 	
 	PageDto pageDto = new PageDto(TotalCnt,criteria);
 	
+	
     String output = searchWord != null ? searchWord : "";
 %>
 

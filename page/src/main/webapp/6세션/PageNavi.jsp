@@ -16,6 +16,10 @@
 	}
 </script>
 <%
+	//컨트롤러에서 생성한 pageDto 넘겨받기
+	PageDto pageDto = (PageDto) request.getAttribute("pageDto"); 
+
+
 	//맨 앞 페이지로 가기
 	out.print("<input type='button' value='<<=' onclick='go("+1+")'>");
 	

@@ -8,8 +8,8 @@ public class Criteria {
 	int pageNo = 1; //요청한 페이지 번호
 	int amount = 10; //한 페이지당 보여질 게시글 수
 	
-	int startNo;
-	int endNo;
+	int startNo = 1;
+	int endNo = 10;
 	
 	public Criteria(String searchField, String searchWord, String pageNoStr) {
 		if(searchWord != null) {
@@ -18,7 +18,8 @@ public class Criteria {
 			
 		}
 		
-		if(pageNoStr != null) {
+		if(pageNoStr != null
+				&& !pageNoStr.equals("")) {
 			pageNo = Integer.parseInt(pageNoStr);
 			if(pageNo > 0) {
 				endNo = pageNo * amount;

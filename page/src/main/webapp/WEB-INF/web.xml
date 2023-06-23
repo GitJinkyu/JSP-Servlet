@@ -109,25 +109,25 @@
 		<url-pattern>/13서블릿/MemberAuth.mvc</url-pattern>
 	</servlet-mapping>
 	
-	<!-- mvcboard 매핑  -->
+
+	<!-- 게시판 리스트 조회 -->
 	<servlet>
 		<servlet-name>ListController</servlet-name>
 		<servlet-class>model2.mvcboard.ListController</servlet-class>
 	</servlet>
-	
 	<servlet-mapping>
 		<servlet-name>ListController</servlet-name>
-		<url-pattern>/14MVCBoard/List.do</url-pattern>
+		<url-pattern>/mvcboard/list.do</url-pattern>
 	</servlet-mapping>
 	
+	<!-- 글쓰기 페이지로 이동 -->
 	<servlet>
 		<servlet-name>WriteController</servlet-name>
 		<servlet-class>model2.mvcboard.WriteController</servlet-class>
 	</servlet>
-	
 	<servlet-mapping>
 		<servlet-name>WriteController</servlet-name>
-		<url-pattern>/14MVCBoard/Write.do</url-pattern>
+		<url-pattern>/mvcboard/write.do</url-pattern>
 	</servlet-mapping>
 	
 </web-app>
