@@ -1,6 +1,7 @@
 package com.library.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.library.common.ConnectionUtil;
+import com.library.common.DBConnectionPool;
 import com.library.vo.Book;
 
 public class BookDao {
@@ -123,6 +125,7 @@ public class BookDao {
 		return res;
 	}
 
+	
 	public String getRentYN(int bookNo) {
 		String rentYN = "";
 		String sql = 
@@ -145,6 +148,46 @@ public class BookDao {
 		}
 		
 		return rentYN;
+	}
+	
+	/**
+	 * 상세화면 보기
+	 * @return
+	 */
+	public Book selectOne(int no) {
+			Book book = null;
+			String title = "";
+			String rentyn = "";
+			String author = "";
+			
+			String sql = "select * from book where no ="+no;
+			
+			if((Integer)no == null || "".equals(no)) {
+				return null;
+			}
+			
+			try (Connection con = DBConnectionPool.getConnection();
+					PreparedStatement pstm = con.prepareStatement(sql);
+					ResultSet rs = pstm.executeQuery();){
+				
+				while(rs.next()) {
+					book = new Book(no, title, rentyn, author);
+					//게시물의 한 행을 book에 저장
+		
+									
+					book.setNo(rs.getInt("NO"));
+					book.setTitle(rs.getString("TITLE"));
+					book.setRentyn(rs.getString("RENTYN"));
+					book.setAuthor(rs.getString("AUTHOR"));
+		
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+			
+			return book;
 	}
 }
 

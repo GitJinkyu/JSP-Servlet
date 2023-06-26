@@ -1,9 +1,15 @@
 package com.library.service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import com.library.common.DBConnectionPool;
 import com.library.dao.BookDao;
 import com.library.vo.Book;
+
 
 public class BookService {
 	BookDao dao = new BookDao();
@@ -83,6 +89,9 @@ public class BookService {
 			System.out.println("관리자에게 문의 해주세요");
 		}
 	}
+
+	
+	
 	
 }
 

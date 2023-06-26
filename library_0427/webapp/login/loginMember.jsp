@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+<%@ include file="/common/header.jsp" %>
+
 <%
 	//세션에 저장된 멤버 객체로 부터 아이디를 출력해온다.
 	if(session.getAttribute("member") != null){

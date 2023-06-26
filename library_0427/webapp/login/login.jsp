@@ -24,7 +24,7 @@
 	//쿠키에 저장된 아이디가 있다면 id필드의 value 속성에 아이디 값을 넣어준다.
 	String cookieValue = CookieManager.returnCookie("userID", request);
 %>  
-     <form id='login_form' action="./loginaction.jsp" method="post">
+     <form id='login_form' action="./loginController.do" method="post">
          <div id='login_form_input'>
              <input type="text" name="userID" id="userID" placeholder='ID를 입력하세요'required value="<%=cookieValue%>">
              <br>
