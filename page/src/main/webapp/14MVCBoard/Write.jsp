@@ -54,6 +54,12 @@
         </td>
     </tr>
     <tr>
+        <td>첨부 파일</td>
+        <td>
+            <input type="file" name="attachedFile" />
+        </td>
+    </tr>
+    <tr>
         <td>비밀번호</td>
         <td>
             <input type="password" name="pass" style="width:100px;" />

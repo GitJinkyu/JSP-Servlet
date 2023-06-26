@@ -70,8 +70,14 @@
 		            <td align="center">${dto.getContent() }</td>         
 		            <td align="center">${dto.getPostdate() }</td>  
 		            <td align="center">${dto.getDowncount() }</td>
-		            <td align="center">${dto.getVisitcount() }</td>      
-		            <td align="center"><a href="Download.jsp?oName=${dto.ofile }&sName=${dto.sfile } ">다운로드</a></td>  
+		            <td align="center">${dto.getVisitcount() }</td>
+					<td align="center">
+					${dto.ofile }
+					<c:if test="${not empty dto.ofile}">
+					<a href="../mvcboard/download.do?ofile=${dto.ofile }&sfile=${dto.sfile } ">다운로드</a>
+					</c:if>
+					
+					</td>  
 		        </tr>
 			 </c:forEach>
 		</c:if>

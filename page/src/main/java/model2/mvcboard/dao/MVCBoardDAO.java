@@ -48,24 +48,66 @@ public class MVCBoardDAO {
 	//글작성
 	public int insert(MVCBoardDTO dto) {
 		int res = 0;
-		String sql = String.format
-				("insert into mvcboard (idx, name, title, content, pass)"
-						+ " values (seq_board_num.nextval, '%s', '%s','%s','%s')"
-										,dto.getName(),dto.getTitle(),dto.getContent(),dto.getPass());
+		
+		String sql = "insert into mvcboard (idx, name, title, content, pass, ofile, sfile)"
+				+ "values (seq_board_num.nextval,?,?,?,?,?,?)";
+
+//		String format을 쓸 경우 데이터가 String타입으로만 들어감 null값도 String으로 변환됨		
+//		String sql = String.format
+//				("insert into mvcboard (idx, name, title, content, pass, ofile, sfile)"
+//						+ " values (seq_board_num.nextval, '%s', '%s','%s','%s','%s','%s')"
+//										,dto.getName(),dto.getTitle(),dto.getContent(),dto.getPass(),dto.getOfile(),dto.getSfile());
 		
 		try(Connection conn = DBConnectionPool.getConnection();
-				Statement stmt =  conn.createStatement();) {
-						res = stmt.executeUpdate(sql);
+			PreparedStatement	psmt = conn.prepareStatement(sql);) {
 			
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getPass());
+			psmt.setString(5, dto.getOfile());
+			psmt.setString(6, dto.getSfile());
+			
+			res = psmt.executeUpdate();			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("게시물 입력중 에러 발생");
 			e.printStackTrace();
 		}
 		
 		return res;
 		
 	}
+	
+	//글 수정
+	public int edit(MVCBoardDTO dto) {
+		int res = 0;
+		
+		String sql = "\"UPDATE board SET name = ?, title = ?, content = ?"
+								+ ", ofile = ?, sfile = ?  WHERE idx =?";
+		
+		try(Connection conn = DBConnectionPool.getConnection();
+			PreparedStatement	psmt = conn.prepareStatement(sql);) {
+			
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getOfile());
+			psmt.setString(5, dto.getSfile());
+			psmt.setString(6, dto.getIdx());
+			
+			res = psmt.executeUpdate();			
+			
+		} catch (SQLException e) {
+			System.out.println("게시물 수정중 에러 발생");
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}
+	
+	
 	
 	//글삭제
 	public int delete(int idx) {
@@ -268,6 +310,48 @@ public class MVCBoardDAO {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
+		
+		return res;
+	}
+	
+	/**
+	 * 게시글의 조회수를 1 증가시킴
+	 * @param idx
+	 * @return
+	 */
+	public int visitCounting(String idx) {
+		int res = 0;
+		
+		String sql = String.format
+		("UPDATE board SET VISITCOUNT = VISITCOUNT + 1 WHERE idx = %s", idx);
+		 
+		try (Connection con = common.DBConnectionPool.getConnection();
+				Statement stmt = con.createStatement();){
+			res = stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
+	
+	/**
+	 * 다운로드 횟수를 1 증가시킴
+	 * @param idx
+	 * @return
+	 */
+	public int downloadCounting(String idx) {
+		int res = 0;
+		
+		String sql = String.format
+		("UPDATE board SET DOWNCOUNT = DOWNCOUNT + 1 WHERE idx = %s", idx);
+		 
+		try (Connection con = common.DBConnectionPool.getConnection();
+				Statement stmt = con.createStatement();){
+			res = stmt.executeUpdate(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		return res;
 	}

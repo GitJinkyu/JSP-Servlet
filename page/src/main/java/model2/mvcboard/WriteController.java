@@ -1,6 +1,9 @@
 package model2.mvcboard;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -8,6 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oreilly.servlet.MultipartRequest;
+
+import common.FileUtil;
 import common.JSFunction;
 import model2.mvcboard.dao.MVCBoardDAO;
 import model2.mvcboard.dto.MVCBoardDTO;
@@ -27,34 +33,69 @@ public class WriteController extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-			int res= 0;
+		
+		String saveDirectory = "c:/upload";
+		//파일업로드: 업로드드 경로,최대 사이즈
+		MultipartRequest mr = FileUtil.uploadFile(req, saveDirectory, 1024*1000);
+		
+		if(mr == null) {
+			//파일 업로드 실패
+			JSFunction.alertBack(resp, "파일업로드중 오류가 발생하였습니다.");
+			return;
+		}
+		
+		//파일 업로드 외에 저장
+		//form 값을 DTO에 저장
+		MVCBoardDTO dto = new MVCBoardDTO();
+		
+		dto.setName(mr.getParameter("name"));
+		dto.setTitle(mr.getParameter("title"));
+		dto.setContent(mr.getParameter("content"));
+		dto.setPass(mr.getParameter("pass"));
+		
+		//원본 파일명과 저장된 파일이름
+		//2. 새로운 파일명 생성
+		//	동일한 파일명이 계속 업로드 될 경우 , 기존파일을 덮어쓰기하므로 파일명을 변경해서 저장해야함
+		String fileName = mr.getFilesystemName("attachedFile");
+		
+		
+		if(fileName != null) {
+			// 첨부파일의 확장자
+			String ext = fileName.substring(fileName.lastIndexOf("."));
 			
-			String name = req.getParameter("name");
-			String title = req.getParameter("title");
-			String content = req.getParameter("content");
-			String pass = req.getParameter("pass");
 			
-			MVCBoardDAO dao = new MVCBoardDAO();
-			MVCBoardDTO dto = new MVCBoardDTO("",name,title,content,"","","","",pass,"");
-			dto.setName(name);
-			dto.setTitle(title);
-			dto.setContent(content);
-			dto.setPass(pass);
-
-			//글 작성
-			res = dao.insert(dto);
+			// H : 0~23, S: milisecond
+			// 현재시간을 파일이름으로 지정
+			String now = new SimpleDateFormat("yyyyMMdd_HmsS").format(new Date());
+			String oFileName = fileName.substring(0,fileName.lastIndexOf("."));
 			
-			if (res > 0) {
-		        // 글 작성 성공한 경우 처리
-				JSFunction.alertLocation(resp, "글 작성 성공", "../mvcboard/write.do");
+			String newFileName = oFileName +"_"+ now + ext;
 			
-		    } else {
-		        // 글 작성 실패한 경우 처리
-		        // 적절한 오류 처리를 수행하거나 다시 작성 페이지로 이동하는 등의 로직을 구현
-		    	System.out.println("오류발생");
-		    	JSFunction.alertBack(resp, "글 작성중 오류 발생했습니다.");
-		    }
-	
+			//3.파일명 변경
+			File oldFile = new File(saveDirectory + File.separator + fileName);
+			File newFile = new File(saveDirectory + File.separator + newFileName);
+			oldFile.renameTo(newFile);
+			
+			//dto에 파일명 저장
+			
+			dto.setOfile(fileName); //원본파일명
+			dto.setSfile(newFileName); //저장파일명
+			
+		}else {
+			dto.setOfile(null); //원본파일명
+			dto.setSfile(null); //저장파일명
+		}
+		
+		MVCBoardDAO dao = new MVCBoardDAO();
+		int res = dao.insert(dto);
+		
+		System.out.println("res = " + res);
+		
+		if(res>0) {
+			JSFunction.alertLocation(resp, "작성되었습니다.","../mvcboard/list.do");
+		}else {
+			JSFunction.alertBack(resp, "작성중 오류가 발생하였습니다. 관리자에게 문의해주세요.");
+		}
 		
 	}
 	public WriteController() {
