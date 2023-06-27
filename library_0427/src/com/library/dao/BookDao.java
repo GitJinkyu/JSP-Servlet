@@ -11,25 +11,39 @@ import java.util.List;
 import com.library.common.ConnectionUtil;
 import com.library.common.DBConnectionPool;
 import com.library.vo.Book;
+import com.library.vo.Criteria;
 
 public class BookDao {
 	/**
 	 * 도서목록 조회
+	 * @param cri 
 	 * @return
 	 */
-	public List<Book> getList(){
+	public List<Book> getList(Criteria cri){
 		List<Book> list = new ArrayList<Book>();
 		
 		//String sql = "select * from book order by no";
-		String sql = 
-				"select no, title"
-				+ "    , nvl((select 대여여부 "
+		String sql ="select * from(select rownum rn,t.* from(" 
+				+"select no, title"
+				+ "    , author "
+				+ "		, nvl((select 대여여부 "
 				+ "			 from 대여 "
 				+ "			where 도서번호 = no "
 				+ "			  and 대여여부='Y'),'N') rentyn "
-				+ "    , author "
-				+ "from book "
-				+ "order by no";
+				+ "from book ";
+		
+		// 검색어가 입력된 경우 검색조건을 추가
+		if (cri.getSearchField() != null && !"".equals(cri.getSearchWord())) {
+		    sql += "WHERE " + cri.getSearchField() +
+		           " LIKE '%" + cri.getSearchWord() + "%' ";
+		}
+		sql += "ORDER BY no DESC"
+				+ "    )t"
+				+ ")"
+				+ "where rn between "
+				+ cri.getStartNo()
+				+ "and "
+				+ cri.getEndNo();
 		
 		// try ( 리소스생성 ) => try문이 종료되면서 리소스를 자동으로 반납
 		try (Connection conn = ConnectionUtil.getConnection();
@@ -38,10 +52,10 @@ public class BookDao {
 				// stmt.executeUpdate : int (몇건이 처리되었는지!!!)
 				ResultSet rs = stmt.executeQuery(sql)){
 			while(rs.next()) {
-				int no = rs.getInt(1);
-				String title = rs.getString(2);
-				String rentYN = rs.getString(3);
+				int no = rs.getInt(2);
+				String title = rs.getString(3);
 				String author = rs.getString(4);
+				String rentYN = rs.getString(5).equals("Y") ? "대출불가" : "대출가능";
 				
 				Book book = new Book(no, title, rentYN, author);
 				list.add(book);
@@ -63,8 +77,8 @@ public class BookDao {
 		int res = 0;
 		
 		String sql = String.format
-	("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', '%s', '%s')"
-				, book.getTitle(), book.getRentyn(), book.getAuthor());
+	("insert into book values (SEQ_BOOK_NO.NEXTVAL, '%s', 'N', '%s')"
+				, book.getTitle(), book.getAuthor());
 
 		// 실행될 쿼리를 출력해봅니다
 		//System.out.println(sql);
@@ -83,11 +97,11 @@ public class BookDao {
 	 * 도서 삭제
 	 * @return
 	 */
-	public int delete(int no) {
+	public int delete(String delNo) {
 		int res = 0;
 		
 		String sql = String.format
-						("delete from book where no = %d", no);
+						("delete from book where no in (%s)", delNo);
 	
 		// 실행될 쿼리를 출력해봅니다
 		//System.out.println(sql);
@@ -171,14 +185,14 @@ public class BookDao {
 					ResultSet rs = pstm.executeQuery();){
 				
 				while(rs.next()) {
-					book = new Book(no, title, rentyn, author);
+					book = new Book(no, title,  author,rentyn);
 					//게시물의 한 행을 book에 저장
 		
 									
 					book.setNo(rs.getInt("NO"));
 					book.setTitle(rs.getString("TITLE"));
-					book.setRentyn(rs.getString("RENTYN"));
 					book.setAuthor(rs.getString("AUTHOR"));
+					book.setRentyn(rs.getString("RENTYN").equals("Y") ? "대출불가" : "대출가능");
 		
 				}
 
@@ -189,8 +203,36 @@ public class BookDao {
 			
 			return book;
 	}
-}
 
+	public int getTotalCnt(Criteria cri) {
+		int totalCnt = 0 ;
+		
+		String sql="select count(*) from book ";
+		
+		//검색어가 입력되었으면 검색 조건 추가
+		if(cri.getSearchField() != null && cri.getSearchWord() != null) {
+			sql += "WHERE "+cri.getSearchField()+" LIKE '%"+cri.getSearchWord()+"%' ";	
+		}
+		sql	+= "order by no desc";
+		
+		// try ( 리소스생성 ) => try문이 종료되면서 리소스를 자동으로 반납
+		try (Connection con = DBConnectionPool.getConnection();
+				PreparedStatement pstm = con.prepareStatement(sql);
+				ResultSet rs = pstm.executeQuery();){
+			
+			rs.next();
+			//게시물의 한 행을 DTO에 저장
+			totalCnt = rs.getInt(1);
+			
+			rs.close();
+		} catch (SQLException e){
+			System.out.println("총 게시물의 수를 조회하던 중 예외가 발생하였습니다.");
+			e.printStackTrace();
+		}
+		
+		return totalCnt;
+	}
+}
 
 
 

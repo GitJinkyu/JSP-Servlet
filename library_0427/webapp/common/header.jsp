@@ -18,12 +18,9 @@
 	<c:if test="${sessionScope.adminyn eq'Y'}" var="res">
 	  <div id="logo">  
       </div>
-      <nav>
-        <ul id="topMenu">
-          <li><a href="#">도서관리</a></li>
-          <li><a href="#">사용자관리</a></li>          
-        </ul>
-      </nav>
+      <div><a href="#">도서관리</a></div>
+      <div><a href="#">사용자관리</a></div>
+      <div><a href="#">로그아웃</a></div>
 	</c:if>
 	
 	<c:if test="${not res }">

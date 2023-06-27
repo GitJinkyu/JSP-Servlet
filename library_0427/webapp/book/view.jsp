@@ -27,6 +27,9 @@
         <td>저자</td> <td>${ view.author}</td>
         <td>대출여부</td> <td>${ view.rentyn}</td>
     </tr>
+    <tr>
+    	<td colspan="4" align="center"> <img src="../images/${view.no }.jpg" alt="표지"></td>
+    </tr>
 
     <!-- 하단 메뉴(버튼) -->
     <tr>
@@ -37,9 +40,10 @@
             <button type="button" onclick="location.href='../mvcboard/pass.do?mode=delete&idx=${ param.idx }';">
                 삭제하기
             </button>
-            <button type="button" onclick="location.href='../login/loginController.do';">
+            <button type="button" onclick="location.href='../book/list.book';">
                 목록 바로가기
             </button>
+            
         </td>
     </tr>
 </table>

@@ -64,7 +64,7 @@ public class LibraryController {
 	private void userMenu(String id) {
 		while(true) {
 			// 책 목록 출력
-			bookService.getList();
+			bookService.getList(cri);
 			System.out.println("사용자 메뉴 ============================================");
 			System.out.println("1. 도서대여 2. 도서반납 0. 로그아웃 4. 종료");
 			System.out.println("======================================================");
@@ -102,7 +102,7 @@ public class LibraryController {
 		
 		while(true) {
 			// 도서 목록을 출력 
-			bookService.getList();
+			bookService.getList(cri);
 			
 			System.out.println("관리자 메뉴 ============================================");
 			System.out.println("1. 도서등록 2. 도서삭제 "
