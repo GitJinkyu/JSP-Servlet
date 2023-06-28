@@ -5,30 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-
-*{
-	padding:0;
-	margin:0;
-}
-
-body{
-	margin: 0 auto;
-	width: 900px;
-	border: 1px solid black;
-}
-header{
-	border: 1px solid black;
-	width: 100%;
-	height: 50px;
-	lint-height: 50px;
-	display: flex;
-}
-
-header div{
-	padding : 20px;
-}
-</style>
+<link rel='stylesheet' href='../css/library.css'>
 
 <script>
 
@@ -142,7 +119,7 @@ header div{
 		            <td align="center">${book.getNo() }</td>         
 		            <td align="center"><a href="../book/view.book?no=${book.no }">${book.getTitle() }</a></td>         
 		            <td align="center">${book.getAuthor() }</td>         
-		            <td align="center">${book.getRentyn() }</td>         
+		            <td align="center">${book.rentyn }</td>         
 					
 				
 		        </tr>

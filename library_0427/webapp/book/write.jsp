@@ -5,27 +5,51 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<link rel='stylesheet' href='../css/library.css'>
+<script type="text/javascript">
+    function validateForm(form) {  // 필수 항목 입력 확인
+        
+        if (form.title.value == "") {
+            alert("제목을 입력하세요.");
+            form.title.focus();
+            return false;
+        }
+        if (form.content.value == "") {
+            alert("저자를 입력하세요.");
+            form.content.focus();
+            return false;
+        }
+        
+    }
+</script>
 </head>
 <body>
 <!-- 헤더 -->
 <%@ include file="../common/header.jsp" %>
 
-<h2>도서 등록</h2>
-<form name="writeFrm" methd="post" action="../book/insert.book">
-	<table border="1" width="90%">
-	
-	    <colgroup>
-	        <col width="15%"/> <col width="35%"/>
-	        <col width="15%"/> <col width="*"/>
-	    </colgroup>
-	
-	    <!-- 게시글 정보 -->
-	    <tr>
-	        <td>도서명</td> <td><input type="text" name="title" style="width:150px;" /></td>
-	    </tr>
-	    <tr>
-	        <td>저자</td> <td><input type="text" name="author" style="width:150px;" /></td>
-	    </tr>
+<h2>책 등록하기</h2>
+<form name="writeFrm" method="post" enctype="multipart/form-data"
+      action="../book/write.book" onsubmit="return validateForm(this);">
+<table border="1" width="90%">
+    <tr>
+        <td>제목</td>
+        <td>
+            <input type="text" name="title" style="width:90%;" />
+        </td>
+    </tr>
+    <tr>
+        <td>저자</td>
+        <td>
+            <textarea name="author" style="width:90%;height:100px;"></textarea>
+        </td>
+    </tr>
+    <tr>
+        <td>책 이미지</td>
+        <td>
+            <input type="file" name="bookImg" />
+        </td>
+    </tr>
+    
 	
 	    <!-- 하단 메뉴(버튼) -->
 	    <tr>

@@ -20,7 +20,7 @@
       </div>
       <div><a href="#">도서관리</a></div>
       <div><a href="#">사용자관리</a></div>
-      <div><a href="#">로그아웃</a></div>
+      <div><a href="../login/logout.do">로그아웃</a></div>
 	</c:if>
 	
 	<c:if test="${not res }">
@@ -35,12 +35,12 @@
       
 		<!-- 로그인 전 사용자 -->
 		<c:if test="${empty sessionScope.userId}" var="res1">
-			<div>로그인</div>
+			<div><a href="../login/login.jsp">로그인</a></div>
 		</c:if>
 		
 		<!-- 사용자 -->
 		<c:if test="${not res1 }">
-			<div>로그아웃</div>
+			<div><a href="../login/logout.do">로그아웃</a></div>
 		
 		</c:if>
 	
