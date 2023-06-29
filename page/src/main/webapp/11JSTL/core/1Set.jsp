@@ -44,7 +44,7 @@
 	 
 	 <c:set var="directVar" value="100" />
 	 <c:set var="elVar" value="${directVar mod 5 }" />
-	 <c:set var="expVar" value="<%=new Date() %>" />
+	 <c:set var="expVar" value="<%=new Date()%>" />
 	 <c:set var="betweenVar">변수값 요렇게 설정</c:set>
 	 
 	 <h4>EL을 이용해 변수 출력</h4>
@@ -56,7 +56,7 @@
 	 </ul>
 	 
 	 <h4>자바빈즈 생성1 - 생성자 사용</h4>
-		<c:set var="personVal1" value='<%=new Member("id","","하니","2023-06-20") %>'
+		<c:set var="personVal1" value='<%=new Member("id","","하니","2023-06-20")%>'
 				scope="request"/>
 				
 		<ul>
@@ -73,7 +73,7 @@
 			value : 값 지정
 		 -->
 		
-	 	<c:set var="personVal2" value='<%=new Member("hani","","하니","2023-06-20") %>'
+	 	<c:set var="personVal2" value='<%=new Member("hani","","하니","2023-06-20")%>'
 				scope="request"/>
 		<ul>
 			<li>변경전 이름 : ${personVal2.name }</li>
@@ -91,12 +91,12 @@
 		<h4>List 컬렉션 이용하기</h4>
 		
 		<%
-		ArrayList<Member> list = new ArrayList<Member>();
-		list.add(new Member("hani","","하니",""));
-		list.add(new Member("nami","","나미",""));
-		%>
+				ArrayList<Member> list = new ArrayList<Member>();
+								list.add(new Member("hani","","하니",""));
+								list.add(new Member("nami","","나미",""));
+				%>
 		
-		<c:set var="pList" value="<%=list %>" scope="request"/>
+		<c:set var="pList" value="<%=list%>" scope="request"/>
 		<ul>
 			<li>이름 : ${pList[0].name }</li>
 			<li>아이디 : ${requestScope.pList[0].id}</li>
@@ -107,10 +107,10 @@
 		</ul>
 		
 		<%
-		Map<String , Member> map = new HashMap<String, Member>();
-		map.put("pArgs1", new Member("1","","일번",""));
-		map.put("pArgs2", new Member("2","","이번",""));
-		%>
+				Map<String , Member> map = new HashMap<String, Member>();
+								map.put("pArgs1", new Member("1","","일번",""));
+								map.put("pArgs2", new Member("2","","이번",""));
+				%>
 		
 		<h4>Map 컬렉션 이용하기</h4>
 		<c:set var="map" value="<%=map %>" scope="request"/>		

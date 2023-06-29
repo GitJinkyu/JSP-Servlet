@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-	//리스트 생성(타입=Object -> 어떤 타입이든지 저장 가능)	
+//리스트 생성(타입=Object -> 어떤 타입이든지 저장 가능)	
 	List<Object> aList =  new ArrayList<Object>();
 	aList.add("정혜진");
 	aList.add(new Member("test","","하니","2000"));
@@ -21,7 +21,6 @@
 	
 	//페이지 영역에 리스트 객체 저장
 	pageContext.setAttribute("aList", aList);
-	
 %>
 	<h2>List 컬렉션</h2>
 	<ul>

@@ -10,7 +10,7 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("user_id");
+String id = request.getParameter("user_id");
 	String pw = request.getParameter("user_pw");
 	
 	MemberDao dao = new MemberDao();
@@ -32,8 +32,6 @@
 		//LoginForm으로 포워드
 		request.getRequestDispatcher("LoginForm.jsp").forward(request, response);
 	}
-	
-
 %>
 
 

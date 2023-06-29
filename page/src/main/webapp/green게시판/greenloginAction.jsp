@@ -11,7 +11,7 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("userID");
+String id = request.getParameter("userID");
 	String pw = request.getParameter("userPW");
 	String saveCheck = request.getParameter("save_check");
 	
@@ -24,8 +24,8 @@
 	
 	/*
 	MemberDao.login() :
-			아이디 비밀번호가 일치하는 사원이 있으면 Member 객체를 반환하고
-			없으면 null을 반환
+	아이디 비밀번호가 일치하는 사원이 있으면 Member 객체를 반환하고
+	없으면 null을 반환
 	*/
 	
 
@@ -38,7 +38,7 @@
 	if(member != null && !"".equals(member.getName()) ){
 		
 	//if("abc".equalsIgnoreCase(id)
-			//&& "123".equals(pw)){
+	//&& "123".equals(pw)){
 		// 로그인 성공
 		// 세션영역에 id 저장
 		session.setAttribute("id", id);

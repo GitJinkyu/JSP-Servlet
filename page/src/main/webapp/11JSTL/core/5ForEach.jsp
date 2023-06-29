@@ -62,13 +62,13 @@
 	
 	<h4>향상된 for문 형태의 forEach 태그</h4>
 	<%
-		String[] rgba = {"Red","Green","Blue","Black"};
+	String[] rgba = {"Red","Green","Blue","Black"};
 	%>
 	<!-- 
 		items 속성에 배열을 지정하고 변수 이름은 "c"로 입력
 		배열을 처음부터 끝까지 돌면서 반복문을 실행한다
 	 -->
-	<c:forEach items="<%=rgba %>" var="c" varStatus="Loop">
+	<c:forEach items="<%=rgba%>" var="c" varStatus="Loop">
 	<table border="1">
 		<tr>
 			<td><span style="color:${c }">${c }</span></td>
@@ -84,13 +84,13 @@
 	
 	<h4>List 컬렉션 사용하기</h4>
 	<%
-		List<Member> list = new ArrayList<Member>();
+	List<Member> list = new ArrayList<Member>();
 		list.add(new Member("id1","","name1",""));
 		list.add(new Member("id2","","name2",""));
 		list.add(new Member("id3","","name3",""));
 		list.add(new Member("id4","","name4",""));
 	%>
-	<c:set var="list" value="<%=list %>"/>
+	<c:set var="list" value="<%=list%>"/>
 	<!-- 
 		items : 반복을 위한 객체를 지정
 		var : 변수명
@@ -102,7 +102,7 @@
 	
 	<h4>Map 컬렉션 사용하기</h4>
 	<%
-		Map<String, Member> map =  new HashMap<String, Member>();
+	Map<String, Member> map =  new HashMap<String, Member>();
 		map.put("1st",new Member("id5","","name5",""));
 		map.put("2st",new Member("id6","","name6",""));
 		map.put("3st",new Member("id7","","name7",""));

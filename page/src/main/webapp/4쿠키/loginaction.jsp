@@ -13,7 +13,7 @@
 </head>
 <body>
 <%
-	String id = request.getParameter("userID");
+String id = request.getParameter("userID");
 	String pw = request.getParameter("userPW");
 	
 	MemberDao dao = new MemberDao();
@@ -33,7 +33,7 @@
 		/* 메서드를 쓰면 더이상 아래방법은 안써도됨  
 		//userID, 사용자 아이디
 		Cookie cookie = new Cookie("userID",
-				URLEncoder.encode(id,"utf-8"));
+		URLEncoder.encode(id,"utf-8"));
 		
 		//쿠키 유지시간 설정
 		cookie.setMaxAge(3600);
@@ -60,7 +60,6 @@
 		//요청할 페이지 경로
 		//response.sendRedirect("login.jsp?loginErr=Y");
 	}
-
 %>
 </body>
 </html>
