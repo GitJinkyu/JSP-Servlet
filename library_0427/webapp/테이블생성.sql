@@ -150,3 +150,46 @@ update book set rentno= 'r00034' where no= 249 and (rentno is null or rentno='')
 --반납 쿼리문
 update book set rentno= NULL, rentyn='N' where no=187;
 update 대여 set 대여여부='N', 반납일=sysdate,연체일 = CASE WHEN SYSDATE - 반납가능일 < 0 THEN '0' ELSE TO_CHAR(SYSDATE - 반납가능일, 'FM99990') END  where 대여번호='R00041' and (대여번호 is not null or 대여번호 != '');
+
+
+select to_char(sysdate,'yyyy/mm/')from dual;
+
+
+delete from member where id= 'guest1';
+delete from member where id='guest1';
+
+
+create sequence seq_board;
+ 
+create table tbl_board (
+  bno number(10,0),
+  title varchar2(200) not null,
+  content varchar2(2000) not null,
+  writer varchar2(50) not null,
+  regdate date default sysdate, 
+  updatedate date default sysdate
+);
+ 
+alter table tbl_board add constraint pk_board 
+primary key (bno);
+
+insert into tbl_board (bno, title, content, writer) 
+values (seq_board.nextval, '테스트 제목','테스트 내용','user00');
+insert into tbl_board (bno, title, content, writer) 
+values (seq_board.nextval, '테스트 제목','테스트 내용','user00');
+insert into tbl_board (bno, title, content, writer) 
+values (seq_board.nextval, '테스트 제목','테스트 내용','user00');
+insert into tbl_board (bno, title, content, writer) 
+values (seq_board.nextval, '테스트 제목','테스트 내용','user00');
+
+
+select * from tbl_board;
+
+		select seq_board.nextval from dual;
+
+
+select * from tbl_board where bno=5;
+select * from tbl_board where bno=10; 
+
+	SELECT COUNT(*) FROM tbl_board;
+
